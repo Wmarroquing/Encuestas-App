@@ -10,7 +10,7 @@ class CustomTheme {
       primaryContainer: CustomColors.primary.withValues(alpha: 0.8),
       secondary: CustomColors.accent,
       secondaryContainer: CustomColors.accent.withValues(alpha: 0.8),
-      surface: CustomColors.backgroundSecondary,
+      surface: CustomColors.background,
       error: CustomColors.error,
       onPrimary: Colors.white,
       onSecondary: Colors.black,
@@ -47,6 +47,23 @@ class CustomTheme {
         backgroundColor: CustomColors.background,
         foregroundColor: CustomColors.primary,
         overlayColor: CustomColors.accent,
+      ),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      showDragHandle: true,
+      dragHandleSize: Size(100.0, 4.0),
+      backgroundColor: CustomColors.background,
+    ),
+    tabBarTheme: TabBarTheme(
+      indicatorSize: TabBarIndicatorSize.tab,
+      indicatorColor: CustomColors.accent,
+      dividerColor: Colors.transparent,
+      labelColor: CustomColors.accent,
+      unselectedLabelColor: CustomColors.textSecondary,
+      overlayColor: WidgetStatePropertyAll(Colors.transparent),
+      indicator: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
       ),
     ),
   );
