@@ -3,10 +3,6 @@ import 'package:devel_app/common/routes/landing_routes.dart';
 import 'package:devel_app/common/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const SurveyApp());
-}
-
 class SurveyApp extends StatelessWidget {
   const SurveyApp({super.key});
 

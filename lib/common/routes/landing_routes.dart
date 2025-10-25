@@ -1,5 +1,6 @@
 import 'package:devel_app/home/home_screen.dart';
 import 'package:devel_app/login/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LandingRoutes {
@@ -8,6 +9,8 @@ class LandingRoutes {
   static const String surveyRoute = '/survey';
 
   static Route<dynamic> appRoutes(final RouteSettings settings) {
+    final Object? args = settings.arguments;
+
     switch (settings.name) {
       case loginRoute:
         return MaterialPageRoute<LoginScreen>(
@@ -15,10 +18,10 @@ class LandingRoutes {
         );
       case homeRoute:
         return MaterialPageRoute<HomeScreen>(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => HomeScreen(authenticatedUser: args! as User),
         );
       default:
-        return MaterialPageRoute(builder: (_) => Container());
+        return MaterialPageRoute<dynamic>(builder: (_) => Container());
     }
   }
 }

@@ -24,7 +24,7 @@ class SurveyCodeModal extends StatelessWidget {
             spacing: 16.0,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Icon(Icons.key),
               Text(
                 'Acceder a encuesta',

@@ -26,7 +26,7 @@ class CustomAlertDialog extends StatelessWidget {
       content: Column(
         spacing: 16.0,
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Text(
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
