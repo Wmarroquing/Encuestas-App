@@ -12,10 +12,13 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   firebase_core: ^4.2.0
+  firebase_auth: ^6.1.1
   firebase_crashlytics: ^5.0.3
   firebase_database: ^12.0.3
+  bloc: ^9.1.0
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
+  lottie: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +31,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/animations/
     - assets/fonts/inter/
 
   fonts:

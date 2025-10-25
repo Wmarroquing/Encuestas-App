@@ -19,7 +19,7 @@ class CustomCard extends StatelessWidget {
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ListTile(
             title: Text(
               maxLines: 1,
@@ -54,7 +54,7 @@ class CustomCard extends StatelessWidget {
             visible: isManagementView,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: <Widget>[
                 TextButton.icon(
                   onPressed: fnOnEditTap,
                   icon: Icon(Icons.edit),

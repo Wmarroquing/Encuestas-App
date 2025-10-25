@@ -17,7 +17,7 @@ class UserSurveyList extends StatelessWidget {
     return Column(
       spacing: 8.0,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         const SizedBox(height: 16.0),
         Text('Mis encuestas', style: Theme.of(context).textTheme.headlineSmall),
         Text('Administra todas las encuestas que has creado.'),
@@ -25,7 +25,7 @@ class UserSurveyList extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 16.0),
-            itemBuilder: (context, index) {
+            itemBuilder: (BuildContext context, int index) {
               return CustomCard(
                 isManagementView: true,
                 fnOnDetailTap: fnOnDetailTap,

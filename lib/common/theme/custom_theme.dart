@@ -60,7 +60,7 @@ class CustomTheme {
       dividerColor: Colors.transparent,
       labelColor: Colors.white,
       unselectedLabelColor: CustomColors.textSecondary,
-      overlayColor: WidgetStatePropertyAll(Colors.transparent),
+      overlayColor: WidgetStatePropertyAll<Color>(Colors.transparent),
       indicator: BoxDecoration(
         color: CustomColors.accent,
         borderRadius: BorderRadius.circular(20.0),

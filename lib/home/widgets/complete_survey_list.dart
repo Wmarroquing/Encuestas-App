@@ -9,10 +9,10 @@ class CompleteSurveyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Row(
           spacing: 16.0,
-          children: [
+          children: <Widget>[
             Text(
               'Encuestas completadas',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -23,7 +23,7 @@ class CompleteSurveyList extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 16.0),
-            itemBuilder: (context, index) {
+            itemBuilder: (BuildContext context, int index) {
               return CustomCard(
                 isManagementView: false,
                 fnOnDetailTap: fnOnDetailTap,

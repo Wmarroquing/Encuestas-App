@@ -27,7 +27,7 @@ class _LoginFormState extends State<LoginForm> {
       key: widget.loginFormKey,
       child: Column(
         spacing: 16.0,
-        children: [
+        children: <Widget>[
           TextFormField(
             textCapitalization: TextCapitalization.none,
             controller: widget.emailController,

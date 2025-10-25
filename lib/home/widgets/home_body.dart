@@ -40,7 +40,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         ),
         child: TabBarView(
           controller: _tabController,
-          children: [
+          children: <Widget>[
             UserSurveyList(
               fnOnDetailTap: _navigateToDetailSurvey,
               fnOnEditTap: _navigateToEditSurvey,
@@ -63,7 +63,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         ),
         child: TabBar(
           controller: _tabController,
-          tabs: [Tab(text: 'Mis encuestas'), Tab(text: 'Completadas')],
+          tabs: <Widget>[Tab(text: 'Mis encuestas'), Tab(text: 'Completadas')],
         ),
       ),
     );
@@ -78,7 +78,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   void _showDeleteSurveyDialog() {
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return CustomAlertDialog(
           isConfirmDialog: true,
           title: 'title',

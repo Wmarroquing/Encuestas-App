@@ -11,7 +11,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: CircleAvatar(
         child: Image.asset('${AppConstants.imagesPath}logo.jpg'),
       ),
-      actions: [IconButton(onPressed: fnOnLogoutTap, icon: Icon(Icons.logout))],
+      actions: <Widget>[
+        IconButton(onPressed: fnOnLogoutTap, icon: Icon(Icons.logout)),
+      ],
     );
   }
 
