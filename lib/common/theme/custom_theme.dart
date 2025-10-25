@@ -10,7 +10,7 @@ class CustomTheme {
       primaryContainer: CustomColors.primary.withValues(alpha: 0.8),
       secondary: CustomColors.accent,
       secondaryContainer: CustomColors.accent.withValues(alpha: 0.8),
-      surface: CustomColors.background,
+      surface: Colors.grey[100],
       error: CustomColors.error,
       onPrimary: Colors.white,
       onSecondary: Colors.black,
@@ -58,14 +58,19 @@ class CustomTheme {
       indicatorSize: TabBarIndicatorSize.tab,
       indicatorColor: CustomColors.accent,
       dividerColor: Colors.transparent,
-      labelColor: CustomColors.accent,
+      labelColor: Colors.white,
       unselectedLabelColor: CustomColors.textSecondary,
       overlayColor: WidgetStatePropertyAll(Colors.transparent),
       indicator: BoxDecoration(
-        color: Colors.white,
+        color: CustomColors.accent,
         borderRadius: BorderRadius.circular(20.0),
       ),
     ),
+    cardTheme: CardTheme(
+      color: CustomColors.background,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.0)),
+    ),
+    appBarTheme: AppBarTheme(backgroundColor: CustomColors.background),
   );
 
   static OutlineInputBorder outlineInputBorder(final Color borderColor) {
