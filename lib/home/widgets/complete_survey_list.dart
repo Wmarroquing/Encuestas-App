@@ -24,10 +24,11 @@ class CompleteSurveyList extends StatelessWidget {
           child: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             itemBuilder: (BuildContext context, int index) {
-              return CustomCard(
-                isManagementView: false,
-                fnOnDetailTap: fnOnDetailTap,
-              );
+              return Card();
+              // return CustomCard(
+              //   isManagementView: false,
+              //   fnOnDetailTap: fnOnDetailTap,
+              // );
             },
             itemCount: 10,
           ),

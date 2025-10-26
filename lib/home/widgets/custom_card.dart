@@ -2,16 +2,20 @@ part of 'home_body.dart';
 
 class CustomCard extends StatelessWidget {
   final bool isManagementView;
+  final SurveyModel currentSurvey;
   final void Function()? fnOnDetailTap;
-  final void Function()? fnOnEditTap;
-  final void Function()? fnOnDeleteTap;
+  final void Function(SurveyModel)? fnOnEditTap;
+  final void Function(String)? fnOnDeleteTap;
+  final void Function(String)? fnOnCopyCode;
 
   const CustomCard({
     super.key,
+    required this.currentSurvey,
     required this.isManagementView,
     this.fnOnDetailTap,
     this.fnOnEditTap,
     this.fnOnDeleteTap,
+    this.fnOnCopyCode,
   });
 
   @override
@@ -24,30 +28,31 @@ class CustomCard extends StatelessWidget {
             title: Text(
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              'Product Feedback Q3',
+              currentSurvey.title,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: CustomColors.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              'Code: JKL-789',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: CustomColors.textSecondary,
-              ),
-            ),
-            trailing: IconButton(
-              color: CustomColors.accent,
-              onPressed: fnOnDetailTap,
-              icon: Icon(Icons.info),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              currentSurvey.description,
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ),
           ListTile(
             title: Text(
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              'Completado el 12/12/2024',
-              style: Theme.of(context).textTheme.labelMedium,
+              'Código: ${currentSurvey.code}',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: CustomColors.textSecondary,
+              ),
+            ),
+            trailing: IconButton(
+              onPressed: () {
+                if (fnOnCopyCode != null) fnOnCopyCode!(currentSurvey.code);
+              },
+              icon: Icon(Icons.copy),
             ),
           ),
           Visibility(
@@ -56,12 +61,21 @@ class CustomCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TextButton.icon(
-                  onPressed: fnOnEditTap,
+                  onPressed: fnOnDetailTap,
+                  icon: Icon(Icons.visibility),
+                  label: Text('Ver'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    if (fnOnEditTap != null) fnOnEditTap!(currentSurvey);
+                  },
                   icon: Icon(Icons.edit),
                   label: Text('Editar'),
                 ),
                 TextButton.icon(
-                  onPressed: fnOnDeleteTap,
+                  onPressed: () {
+                    if (fnOnDeleteTap != null) fnOnDeleteTap!(currentSurvey.id);
+                  },
                   icon: Icon(Icons.delete),
                   label: Text('Eliminar'),
                 ),

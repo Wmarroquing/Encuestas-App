@@ -10,7 +10,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
     on<FirebaseAuthLoggedIn>(_onLoggedIn);
     on<FirebaseAuthSignedUp>(_onSignedUp);
-    on<FirebaseAuthLoggedOut>(_onLoggedOut);
   }
 
   final FirebaseAuthServices _authRepository = FirebaseAuthServices();
@@ -56,13 +55,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } catch (_) {
       emit(AuthenticationError(message: 'Ocurrió un error inesperado'));
     }
-  }
-
-  Future<void> _onLoggedOut(
-    FirebaseAuthLoggedOut event,
-    Emitter<LoginState> emit,
-  ) async {
-    await _authRepository.signOut();
-    emit(AuthenticationError(message: 'No se pudo cerrar la sesión'));
   }
 }
