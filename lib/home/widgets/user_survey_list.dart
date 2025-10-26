@@ -1,12 +1,14 @@
 part of 'home_body.dart';
 
 class UserSurveyList extends StatelessWidget {
+  final void Function() fnOnCreateTap;
   final void Function() fnOnDetailTap;
   final void Function() fnOnEditTap;
   final void Function() fnOnDeleteTap;
 
   const UserSurveyList({
     super.key,
+    required this.fnOnCreateTap,
     required this.fnOnDetailTap,
     required this.fnOnEditTap,
     required this.fnOnDeleteTap,
@@ -21,7 +23,7 @@ class UserSurveyList extends StatelessWidget {
         const SizedBox(height: 16.0),
         Text('Mis encuestas', style: Theme.of(context).textTheme.headlineSmall),
         Text('Administra todas las encuestas que has creado.'),
-        ElevatedButton(onPressed: () {}, child: Text('Crear encuesta')),
+        ElevatedButton(onPressed: fnOnCreateTap, child: Text('Crear encuesta')),
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 16.0),

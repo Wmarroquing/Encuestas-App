@@ -1,5 +1,6 @@
 import 'package:devel_app/common/dialogs/custom_alert_dialog.dart';
 import 'package:devel_app/common/resources/app_constants.dart';
+import 'package:devel_app/common/routes/landing_routes.dart';
 import 'package:devel_app/common/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
           controller: _tabController,
           children: <Widget>[
             UserSurveyList(
+              fnOnCreateTap: _navigateToCreateSurvey,
               fnOnDetailTap: _navigateToDetailSurvey,
               fnOnEditTap: _navigateToEditSurvey,
               fnOnDeleteTap: _showDeleteSurveyDialog,
@@ -70,6 +72,10 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   }
 
   void _logout() {}
+
+  void _navigateToCreateSurvey() {
+    Navigator.pushNamed(context, LandingRoutes.surveyRoute);
+  }
 
   void _navigateToDetailSurvey() {}
 

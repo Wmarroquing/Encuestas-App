@@ -24,7 +24,7 @@ class CustomAlertDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.0)),
       icon: Image.asset('${AppConstants.imagesPath}logo.jpg', height: 90.0),
       content: Column(
-        spacing: 16.0,
+        spacing: 4.0,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
@@ -42,17 +42,23 @@ class CustomAlertDialog extends StatelessWidget {
             ).textTheme.titleSmall?.copyWith(color: CustomColors.textSecondary),
           ),
           const SizedBox(height: 16.0),
-          OutlinedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              if (fnOnConfirmPressed != null) fnOnConfirmPressed!();
-            },
-            child: Text('Aceptar'),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                if (fnOnConfirmPressed != null) fnOnConfirmPressed!();
+              },
+              child: Text('Aceptar'),
+            ),
           ),
           if (isConfirmDialog)
-            OutlinedButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancelar'),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Cancelar'),
+              ),
             ),
         ],
       ),
