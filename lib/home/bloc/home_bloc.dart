@@ -29,12 +29,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await _surveySubscription?.cancel();
 
     _surveySubscription = _firebaseService.getSurveys().listen(
-      (List<SurveyModel> surveys) {
-        add(SurveysUpdatedEvent(surveys: surveys));
-      },
-      onError: (error) {
-        add(SurveysErrorEvent(message: error.toString()));
-      },
+      (List<SurveyModel> surveys) => add(SurveysUpdatedEvent(surveys: surveys)),
+      onError: (error) => add(SurveysErrorEvent(message: error.toString())),
     );
   }
 

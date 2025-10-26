@@ -152,7 +152,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
       context,
       LandingRoutes.surveyRoute,
       arguments: SurveyArguments(authenticatedUser: widget.authenticatedUser),
-    );
+    ).then((Object? result) => _homeBloc.add(SubscribeSurveys()));
   }
 
   void _navigateToDetailSurvey() {}
@@ -165,7 +165,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         authenticatedUser: widget.authenticatedUser,
         surveyModel: surveyModel,
       ),
-    );
+    ).then((Object? result) => _homeBloc.add(SubscribeSurveys()));
   }
 
   void _showDeleteSurveyDialog(String surveyId) {
@@ -174,7 +174,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
       builder: (BuildContext context) {
         return CustomAlertDialog(
           isConfirmDialog: true,
-          title: 'title',
+          title: 'Borrar encuesta',
           description:
               'Está seguro que desea borrar esta encuesta?\nTodos los datos se perderán.',
           fnOnConfirmPressed: () {
