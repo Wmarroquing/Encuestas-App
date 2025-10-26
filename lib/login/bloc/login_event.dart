@@ -20,5 +20,3 @@ class FirebaseAuthSignedUp extends LoginEvent {
 
   const FirebaseAuthSignedUp({required this.email, required this.password});
 }
-
-class FirebaseAuthLoggedOut extends LoginEvent {}

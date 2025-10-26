@@ -1,44 +1,37 @@
 part of 'home_body.dart';
 
 class UserSurveyList extends StatelessWidget {
-  final void Function() fnOnCreateTap;
+  final List<SurveyModel> surveys;
   final void Function() fnOnDetailTap;
-  final void Function() fnOnEditTap;
-  final void Function() fnOnDeleteTap;
+  final void Function(SurveyModel) fnOnEditTap;
+  final void Function(String) fnOnDeleteTap;
+  final void Function(String) fnOnCopyCode;
 
   const UserSurveyList({
     super.key,
-    required this.fnOnCreateTap,
+    required this.surveys,
     required this.fnOnDetailTap,
     required this.fnOnEditTap,
     required this.fnOnDeleteTap,
+    required this.fnOnCopyCode,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 8.0,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const SizedBox(height: 16.0),
-        Text('Mis encuestas', style: Theme.of(context).textTheme.headlineSmall),
-        Text('Administra todas las encuestas que has creado.'),
-        ElevatedButton(onPressed: fnOnCreateTap, child: Text('Crear encuesta')),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            itemBuilder: (BuildContext context, int index) {
-              return CustomCard(
-                isManagementView: true,
-                fnOnDetailTap: fnOnDetailTap,
-                fnOnEditTap: fnOnEditTap,
-                fnOnDeleteTap: fnOnDeleteTap,
-              );
-            },
-            itemCount: 10,
-          ),
-        ),
-      ],
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      itemBuilder: (BuildContext context, int index) {
+        final SurveyModel currentSurvey = surveys[index];
+        return CustomCard(
+          isManagementView: true,
+          currentSurvey: currentSurvey,
+          fnOnDetailTap: fnOnDetailTap,
+          fnOnEditTap: fnOnEditTap,
+          fnOnDeleteTap: fnOnDeleteTap,
+          fnOnCopyCode: fnOnCopyCode,
+        );
+      },
+      itemCount: surveys.length,
     );
   }
 }

@@ -1,12 +1,13 @@
 part of 'survey_body.dart';
 
 class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SurveyAppBar({super.key});
+  final bool isEditView;
+  const SurveyAppBar({super.key, required this.isEditView});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('Crear nueva encuesta'),
+      title: Text(isEditView ? 'Editar encuesta' : 'Crear nueva encuesta'),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: Padding(

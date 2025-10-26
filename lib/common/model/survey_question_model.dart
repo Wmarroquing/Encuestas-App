@@ -1,4 +1,4 @@
-part of 'survey_model.dart';
+part of 'survey_request.dart';
 
 class SurveyQuestionModel {
   final int id;
@@ -11,23 +11,27 @@ class SurveyQuestionModel {
     required this.id,
     required this.text,
     required this.type,
-    this.isRequired = false,
     required this.options,
+    this.isRequired = false,
   });
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'id': id,
+    'text': text,
+    'type': type,
+    'isRequired': isRequired,
+    'options': List<dynamic>.from(options.map((String option) => option)),
+  };
 
   factory SurveyQuestionModel.fromJson(Map<String, dynamic> json) =>
       SurveyQuestionModel(
         id: json['id'],
         text: json['text'],
         type: json['type'],
+        options:
+            json['options'] != null
+                ? List<String>.from(json['options'])
+                : <String>[],
         isRequired: json['isRequired'],
-        options: List<String>.from(json['options'].map((option) => option)),
       );
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'text': text,
-    'type': type,
-    'options': List<dynamic>.from(options.map((String option) => option)),
-  };
 }
