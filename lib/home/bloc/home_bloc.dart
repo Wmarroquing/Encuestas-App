@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<CompleteSurveysUpdatedEvent>(_onCompleteSurveysUpdated);
     on<SurveysErrorEvent>(_onSurveysError);
     on<SurveyDeletedEvent>(_onSurveyDeleted);
+    on<CompleteSurveyDeletedEvent>(_onCompleteSurveyDeleted);
     on<SurveyGetByCodeEvent>(_onSurveyObtained);
     on<FirebaseAuthLoggedOut>(_onLoggedOut);
   }
@@ -60,6 +61,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeInProgress());
     try {
       await _firebaseService.deleteSurvey(surveyId: event.surveyId);
+    } catch (_) {
+      emit(HomeSurveysException(message: 'Error al eliminar encuesta'));
+    }
+  }
+
+  Future<void> _onCompleteSurveyDeleted(
+    CompleteSurveyDeletedEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(HomeInProgress());
+    try {
+      await _firebaseService.deleteCompleteSurvey(surveyId: event.surveyId);
     } catch (_) {
       emit(HomeSurveysException(message: 'Error al eliminar encuesta'));
     }

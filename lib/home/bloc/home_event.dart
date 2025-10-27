@@ -31,6 +31,11 @@ class SurveyDeletedEvent extends HomeEvent {
   const SurveyDeletedEvent({required this.surveyId});
 }
 
+class CompleteSurveyDeletedEvent extends HomeEvent {
+  final String surveyId;
+  const CompleteSurveyDeletedEvent({required this.surveyId});
+}
+
 class SurveyGetByCodeEvent extends HomeEvent {
   final String code;
   final List<SurveyModel> currentSurveys;

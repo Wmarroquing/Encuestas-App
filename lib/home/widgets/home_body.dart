@@ -118,6 +118,8 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
                   CompleteSurveyList(
                     completeSurveys: _completeSurveys,
                     fnOnDetailTap: _navigateToDetailSurvey,
+                    fnOnEditTap: _navigateToEditCompletedSurvey,
+                    fnOnDeleteTap: _showDeleteCompleteSurveyDialog,
                   ),
                 ],
               ),
@@ -191,6 +193,18 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
     ).then((Object? result) => _subscribeToFirebaseDB());
   }
 
+  void _navigateToEditCompletedSurvey(SurveyModel surveyModel) {
+    Navigator.pushNamed(
+      context,
+      LandingRoutes.surveyRoute,
+      arguments: SurveyArgs(
+        surveyId: surveyModel.id,
+        isOnlyView: false,
+        surveyModel: surveyModel,
+      ),
+    ).then((Object? result) => _subscribeToFirebaseDB());
+  }
+
   void _verifySurveyCode() {
     if (_surveyFormKey.currentState!.validate()) {
       Navigator.pop(context);
@@ -214,6 +228,23 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
               'Está seguro que desea borrar esta encuesta?\nTodos los datos se perderán.',
           fnOnConfirmPressed: () {
             _homeBloc.add(SurveyDeletedEvent(surveyId: surveyId));
+          },
+        );
+      },
+    );
+  }
+
+  void _showDeleteCompleteSurveyDialog(String surveyId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          isConfirmDialog: true,
+          title: 'Borrar encuesta',
+          description:
+              'Está seguro que desea borrar esta encuesta?\nTodos los datos se perderán.',
+          fnOnConfirmPressed: () {
+            _homeBloc.add(CompleteSurveyDeletedEvent(surveyId: surveyId));
           },
         );
       },

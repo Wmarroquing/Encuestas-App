@@ -44,6 +44,10 @@ class FirebaseService {
     await _firebaseDB.child('surveys/$surveyId').remove();
   }
 
+  Future<void> deleteCompleteSurvey({required String surveyId}) async {
+    await _firebaseDB.child('completeSurveys/$surveyId').remove();
+  }
+
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
