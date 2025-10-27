@@ -9,8 +9,8 @@ Los usuarios autenticados podrán crear, modificar y eliminar encuestas.
 Los usuarios pueden contestar encuestas de forma anónima ingresando el código para acceder
 
 ## Usuario para acceder al app
-User: Admin
-Password: @dm1n! 
+usuario: admin@develsystems.com 
+contraseña: @dmin!123
 
 ## Versión de Flutter utilizada para el proyecto
 Flutter 3.29.3 • channel stable • https://github.com/flutter/flutter.git
