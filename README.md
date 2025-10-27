@@ -8,6 +8,9 @@ Este repositorio contiene un proyecto para la administración de encuestas en li
 Los usuarios autenticados podrán crear, modificar y eliminar encuestas.
 Los usuarios pueden contestar encuestas de forma anónima ingresando el código para acceder
 
+## Link de descarga APK
+https://appdistribution.firebase.google.com/testerapps/1:1001324316567:android:d670f844b12284038526d2/releases/7vml6ln8oc7fo?utm_source=firebase-console
+
 ## Usuario para acceder al app
 usuario: admin@develsystems.com 
 contraseña: @dmin!123
