@@ -1,40 +1,21 @@
 part of 'survey_body.dart';
 
-class CustomBottomSheet extends StatelessWidget {
-  final bool isEditView;
-  final void Function() fnOnCancelPressed;
-  final void Function() fnOnCreatePressed;
+class SurveyBottomSheet extends StatelessWidget {
+  final void Function()? fnOnCompletePressed;
 
-  const CustomBottomSheet({
-    super.key,
-    required this.isEditView,
-    required this.fnOnCancelPressed,
-    required this.fnOnCreatePressed,
-  });
+  const SurveyBottomSheet({super.key, required this.fnOnCompletePressed});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(22.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(
-              width: 140.0,
-              child: OutlinedButton(
-                onPressed: fnOnCancelPressed,
-                child: Text('Cancelar'),
-              ),
-            ),
-            SizedBox(
-              width: 140.0,
-              child: OutlinedButton(
-                onPressed: fnOnCreatePressed,
-                child: Text(isEditView ? 'Editar' : 'Crear'),
-              ),
-            ),
-          ],
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: fnOnCompletePressed,
+            child: Text('Completar'),
+          ),
         ),
       ),
     );

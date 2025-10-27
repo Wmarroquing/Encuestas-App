@@ -1,7 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 
-class FirebaseAuthServices {
+import 'package:devel_app/common/model/survey_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+class FirebaseLoginServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final DatabaseReference _firebaseDB = FirebaseDatabase.instance.ref();
 
   Future<UserCredential> signIn({
     required String email,
@@ -21,5 +26,16 @@ class FirebaseAuthServices {
       email: email,
       password: password,
     );
+  }
+
+  Future<SurveyModel?> getSurveyByCode({required String code}) async {
+    final DataSnapshot apiResp = await _firebaseDB.child('surveys/$code').get();
+
+    if (!apiResp.exists) return null;
+
+    final Map<String, dynamic> data =
+        jsonDecode(jsonEncode(apiResp.value)) as Map<String, dynamic>;
+
+    return SurveyModel.fromJson(data);
   }
 }

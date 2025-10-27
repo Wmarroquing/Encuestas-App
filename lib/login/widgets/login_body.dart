@@ -1,5 +1,8 @@
 import 'package:devel_app/common/dialogs/custom_alert_dialog.dart';
+import 'package:devel_app/common/dialogs/survey_code_modal.dart';
 import 'package:devel_app/common/loader/custom_loader.dart';
+import 'package:devel_app/common/model/survey_args.dart';
+import 'package:devel_app/common/model/survey_model.dart';
 import 'package:devel_app/common/resources/app_constants.dart';
 import 'package:devel_app/common/routes/landing_routes.dart';
 import 'package:devel_app/common/theme/custom_colors.dart';
@@ -11,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'login_form.dart';
-part 'survey_code_modal.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody({super.key});
@@ -25,6 +27,7 @@ class _LoginBodyState extends State<LoginBody> {
   final GlobalKey<FormState> _surveyFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
 
   late LoginBloc _loginBloc;
 
@@ -49,8 +52,15 @@ class _LoginBodyState extends State<LoginBody> {
           case UserUnauthenticated(:final String message):
             _showExceptionMessage(message);
             break;
-          case AuthenticationError(:final String message):
+          case LoginException(:final String message):
             _showExceptionMessage(message);
+          case SurveyObtainedSuccess(:final SurveyModel survey):
+            Navigator.pushNamed(
+              context,
+              LandingRoutes.surveyRoute,
+              arguments: SurveyArgs(isOnlyView: false, surveyModel: survey),
+            );
+            break;
           default:
         }
       },
@@ -125,6 +135,7 @@ class _LoginBodyState extends State<LoginBody> {
   void _verifySurveyCode() {
     if (_surveyFormKey.currentState!.validate()) {
       Navigator.pop(context);
+      _loginBloc.add(FirebaseGetSurveyByCode(code: _codeController.text));
     }
   }
 
@@ -137,6 +148,7 @@ class _LoginBodyState extends State<LoginBody> {
       builder: (BuildContext context) {
         return SurveyCodeModal(
           surveyFormKey: _surveyFormKey,
+          codeController: _codeController,
           fnOnPressButton: _verifySurveyCode,
         );
       },
@@ -148,7 +160,7 @@ class _LoginBodyState extends State<LoginBody> {
       context: context,
       builder: (BuildContext context) {
         return CustomAlertDialog(
-          title: 'Error de autenticación',
+          title: 'Ocurrió un error',
           description: message,
         );
       },

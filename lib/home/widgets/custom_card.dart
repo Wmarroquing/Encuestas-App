@@ -3,7 +3,7 @@ part of 'home_body.dart';
 class CustomCard extends StatelessWidget {
   final bool isManagementView;
   final SurveyModel currentSurvey;
-  final void Function()? fnOnDetailTap;
+  final void Function(SurveyModel)? fnOnDetailTap;
   final void Function(SurveyModel)? fnOnEditTap;
   final void Function(String)? fnOnDeleteTap;
   final void Function(String)? fnOnCopyCode;
@@ -41,46 +41,48 @@ class CustomCard extends StatelessWidget {
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ),
-          ListTile(
-            title: Text(
-              'Código: ${currentSurvey.code}',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: CustomColors.textSecondary,
-              ),
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                if (fnOnCopyCode != null) fnOnCopyCode!(currentSurvey.code);
-              },
-              icon: Icon(Icons.copy),
-            ),
-          ),
           Visibility(
             visible: isManagementView,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                TextButton.icon(
-                  onPressed: fnOnDetailTap,
-                  icon: Icon(Icons.visibility),
-                  label: Text('Ver'),
+            child: ListTile(
+              title: Text(
+                'Código: ${currentSurvey.code}',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: CustomColors.textSecondary,
                 ),
-                TextButton.icon(
-                  onPressed: () {
-                    if (fnOnEditTap != null) fnOnEditTap!(currentSurvey);
-                  },
-                  icon: Icon(Icons.edit),
-                  label: Text('Editar'),
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    if (fnOnDeleteTap != null) fnOnDeleteTap!(currentSurvey.id);
-                  },
-                  icon: Icon(Icons.delete),
-                  label: Text('Eliminar'),
-                ),
-              ],
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  if (fnOnCopyCode != null) fnOnCopyCode!(currentSurvey.code);
+                },
+                icon: Icon(Icons.copy),
+              ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton.icon(
+                onPressed: () {
+                  if (fnOnDetailTap != null) fnOnDetailTap!(currentSurvey);
+                },
+                icon: Icon(Icons.visibility),
+                label: Text('Ver'),
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  if (fnOnEditTap != null) fnOnEditTap!(currentSurvey);
+                },
+                icon: Icon(Icons.edit),
+                label: Text('Editar'),
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  if (fnOnDeleteTap != null) fnOnDeleteTap!(currentSurvey.id);
+                },
+                icon: Icon(Icons.delete),
+                label: Text('Eliminar'),
+              ),
+            ],
           ),
         ],
       ),

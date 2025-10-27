@@ -16,9 +16,19 @@ class HomeSurveysLoadedSuccess extends HomeState {
   const HomeSurveysLoadedSuccess({required this.surveys});
 }
 
-class HomeSurveysLoadedError extends HomeState {
+class HomeCompleteSurveysLoadedSuccess extends HomeState {
+  final List<SurveyModel> surveys;
+  const HomeCompleteSurveysLoadedSuccess({required this.surveys});
+}
+
+class HomeSurveysException extends HomeState {
   final String message;
-  const HomeSurveysLoadedError({required this.message});
+  const HomeSurveysException({required this.message});
+}
+
+final class SurveyObtainedSuccess extends HomeState {
+  final SurveyModel survey;
+  const SurveyObtainedSuccess({required this.survey});
 }
 
 class HomeSurveysDeletedSuccess extends HomeState {}

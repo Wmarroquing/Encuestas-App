@@ -20,3 +20,9 @@ class FirebaseAuthSignedUp extends LoginEvent {
 
   const FirebaseAuthSignedUp({required this.email, required this.password});
 }
+
+class FirebaseGetSurveyByCode extends LoginEvent {
+  final String code;
+
+  const FirebaseGetSurveyByCode({required this.code});
+}

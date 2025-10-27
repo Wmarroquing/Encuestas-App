@@ -1,13 +1,12 @@
-import 'dart:ui';
-
 import 'package:devel_app/common/dialogs/custom_alert_dialog.dart';
+import 'package:devel_app/common/dialogs/survey_code_modal.dart';
 import 'package:devel_app/common/loader/custom_loader.dart';
-import 'package:devel_app/common/model/survey_request.dart';
+import 'package:devel_app/common/model/survey_args.dart';
+import 'package:devel_app/common/model/survey_model.dart';
 import 'package:devel_app/common/resources/app_constants.dart';
 import 'package:devel_app/common/routes/landing_routes.dart';
 import 'package:devel_app/common/theme/custom_colors.dart';
 import 'package:devel_app/home/bloc/home_bloc.dart';
-import 'package:devel_app/common/model/survey_arguments.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +28,10 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
+  final GlobalKey<FormState> _surveyFormKey = GlobalKey<FormState>();
+  final TextEditingController _codeController = TextEditingController();
   List<SurveyModel> _surveys = <SurveyModel>[];
+  List<SurveyModel> _completeSurveys = <SurveyModel>[];
   late final TabController _tabController;
   late HomeBloc _homeBloc;
   late String _appBarTitle;
@@ -48,7 +50,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _homeBloc.add(SubscribeSurveys());
+    _subscribeToFirebaseDB();
   }
 
   @override
@@ -65,7 +67,12 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
           case HomeSurveysLoadedSuccess(:final List<SurveyModel> surveys):
             setState(() => _surveys = surveys);
             break;
-          case HomeSurveysLoadedError(:final String message):
+          case HomeCompleteSurveysLoadedSuccess(
+            :final List<SurveyModel> surveys,
+          ):
+            setState(() => _completeSurveys = surveys);
+            break;
+          case HomeSurveysException(:final String message):
             _showExceptionMessage(message);
             break;
           case HomeLoggedOutSuccess():
@@ -74,6 +81,12 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
               (Route<dynamic> route) => false,
             );
             break;
+          case SurveyObtainedSuccess(:final SurveyModel survey):
+            Navigator.pushNamed(
+              context,
+              LandingRoutes.surveyRoute,
+              arguments: SurveyArgs(isOnlyView: false, surveyModel: survey),
+            );
           default:
         }
       },
@@ -85,7 +98,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
               subtitle: _appBarSubtitle,
               currentTab: _tabController.index,
               fnOnCreateTap: _navigateToCreateSurvey,
-              fnOnCompleteTap: () {},
+              fnOnCompleteTap: _openSurveyCodeModal,
               fnOnLogoutTap: _logout,
             ),
             body: Padding(
@@ -102,7 +115,10 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
                     fnOnDeleteTap: _showDeleteSurveyDialog,
                     fnOnCopyCode: _handleCopySurveyCode,
                   ),
-                  CompleteSurveyList(fnOnDetailTap: _navigateToDetailSurvey),
+                  CompleteSurveyList(
+                    completeSurveys: _completeSurveys,
+                    fnOnDetailTap: _navigateToDetailSurvey,
+                  ),
                 ],
               ),
             ),
@@ -121,11 +137,9 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
     );
   }
 
-  void _handleCopySurveyCode(String code) {
-    Clipboard.setData(ClipboardData(text: code));
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Texto copiado al portapapeles')));
+  void _subscribeToFirebaseDB() {
+    _homeBloc.add(SubscribeSurveys());
+    _homeBloc.add(SubscribeCompleteSurveys());
   }
 
   void _handleTabController() {
@@ -147,25 +161,46 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
     }
   }
 
-  void _navigateToCreateSurvey() {
+  void _handleCopySurveyCode(String code) {
+    Clipboard.setData(ClipboardData(text: code));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Texto copiado al portapapeles')));
+  }
+
+  void _navigateToDetailSurvey(SurveyModel survey) {
     Navigator.pushNamed(
       context,
       LandingRoutes.surveyRoute,
-      arguments: SurveyArguments(authenticatedUser: widget.authenticatedUser),
-    ).then((Object? result) => _homeBloc.add(SubscribeSurveys()));
+      arguments: SurveyArgs(isOnlyView: true, surveyModel: survey),
+    ).then((Object? result) => _subscribeToFirebaseDB());
   }
 
-  void _navigateToDetailSurvey() {}
+  void _navigateToCreateSurvey() {
+    Navigator.pushNamed(
+      context,
+      LandingRoutes.surveyAdminRoute,
+    ).then((Object? result) => _subscribeToFirebaseDB());
+  }
 
   void _navigateToEditSurvey(SurveyModel surveyModel) {
     Navigator.pushNamed(
       context,
-      LandingRoutes.surveyRoute,
-      arguments: SurveyArguments(
-        authenticatedUser: widget.authenticatedUser,
-        surveyModel: surveyModel,
-      ),
-    ).then((Object? result) => _homeBloc.add(SubscribeSurveys()));
+      LandingRoutes.surveyAdminRoute,
+      arguments: surveyModel,
+    ).then((Object? result) => _subscribeToFirebaseDB());
+  }
+
+  void _verifySurveyCode() {
+    if (_surveyFormKey.currentState!.validate()) {
+      Navigator.pop(context);
+      _homeBloc.add(
+        SurveyGetByCodeEvent(
+          code: _codeController.text,
+          currentSurveys: _surveys,
+        ),
+      );
+    }
   }
 
   void _showDeleteSurveyDialog(String surveyId) {
@@ -192,6 +227,22 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         return CustomAlertDialog(
           title: 'Error de recuperación',
           description: message,
+        );
+      },
+    );
+  }
+
+  void _openSurveyCodeModal() {
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return SurveyCodeModal(
+          surveyFormKey: _surveyFormKey,
+          codeController: _codeController,
+          fnOnPressButton: _verifySurveyCode,
         );
       },
     );

@@ -9,9 +9,16 @@ sealed class HomeEvent extends Equatable {
 
 class SubscribeSurveys extends HomeEvent {}
 
+class SubscribeCompleteSurveys extends HomeEvent {}
+
 class SurveysUpdatedEvent extends HomeEvent {
   final List<SurveyModel> surveys;
   const SurveysUpdatedEvent({required this.surveys});
+}
+
+class CompleteSurveysUpdatedEvent extends HomeEvent {
+  final List<SurveyModel> surveys;
+  const CompleteSurveysUpdatedEvent({required this.surveys});
 }
 
 class SurveysErrorEvent extends HomeEvent {
@@ -22,6 +29,16 @@ class SurveysErrorEvent extends HomeEvent {
 class SurveyDeletedEvent extends HomeEvent {
   final String surveyId;
   const SurveyDeletedEvent({required this.surveyId});
+}
+
+class SurveyGetByCodeEvent extends HomeEvent {
+  final String code;
+  final List<SurveyModel> currentSurveys;
+
+  const SurveyGetByCodeEvent({
+    required this.code,
+    required this.currentSurveys,
+  });
 }
 
 class FirebaseAuthLoggedOut extends HomeEvent {}

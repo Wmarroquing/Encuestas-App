@@ -1,12 +1,16 @@
-part of 'login_body.dart';
+import 'package:devel_app/common/theme/custom_colors.dart';
+import 'package:devel_app/common/validations/empty_field_validator.dart';
+import 'package:flutter/material.dart';
 
 class SurveyCodeModal extends StatelessWidget {
   final GlobalKey<FormState> surveyFormKey;
+  final TextEditingController codeController;
   final void Function() fnOnPressButton;
 
   const SurveyCodeModal({
     super.key,
     required this.surveyFormKey,
+    required this.codeController,
     required this.fnOnPressButton,
   });
 
@@ -39,7 +43,8 @@ class SurveyCodeModal extends StatelessWidget {
               ),
               TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(hintText: 'Ej: ABC123XYZ'),
+                decoration: InputDecoration(hintText: 'Ej: XYZ123'),
+                controller: codeController,
                 validator: emptyFieldValidator,
               ),
               ElevatedButton(

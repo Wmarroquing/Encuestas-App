@@ -11,7 +11,11 @@ final class SurveyInitial extends SurveyState {}
 
 final class SurveyInProgress extends SurveyState {}
 
-final class SurveyCreationSuccess extends SurveyState {}
+final class SurveyCreationSuccess extends SurveyState {
+  final String accessCode;
+
+  const SurveyCreationSuccess({required this.accessCode});
+}
 
 final class SurveyUpdatedSuccess extends SurveyState {}
 

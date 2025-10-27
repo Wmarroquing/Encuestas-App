@@ -10,8 +10,8 @@ class HomeBottomSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(
         top: 8.0,
-        left: 4.0,
-        right: 4.0,
+        left: 22.0,
+        right: 22.0,
         bottom: 32.0,
       ),
       decoration: BoxDecoration(
