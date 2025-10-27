@@ -2,7 +2,7 @@ part of 'home_body.dart';
 
 class UserSurveyList extends StatelessWidget {
   final List<SurveyModel> surveys;
-  final void Function() fnOnDetailTap;
+  final void Function(SurveyModel) fnOnDetailTap;
   final void Function(SurveyModel) fnOnEditTap;
   final void Function(String) fnOnDeleteTap;
   final void Function(String) fnOnCopyCode;

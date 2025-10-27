@@ -13,7 +13,7 @@ class SurveyModel {
     required this.id,
     required this.title,
     required this.description,
-    required this.authorId,
+    this.authorId,
     required this.code,
     required this.createdAt,
     required this.questions,
@@ -23,7 +23,7 @@ class SurveyModel {
     id: json['id'] ?? '',
     title: json['title'],
     description: json['description'],
-    authorId: json['authorId'],
+    authorId: json['authorId'] ?? '',
     code: json['code'],
     createdAt: json['createdAt'],
     questions: List<SurveyQuestionModel>.from(

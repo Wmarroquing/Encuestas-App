@@ -1,17 +1,19 @@
-part of 'survey_request.dart';
+part of 'survey_model.dart';
 
 class SurveyQuestionModel {
   final int id;
   final String text;
   final String type;
-  bool isRequired;
   final List<String> options;
+  dynamic answer;
+  bool isRequired;
 
   SurveyQuestionModel({
     required this.id,
     required this.text,
     required this.type,
     required this.options,
+    this.answer,
     this.isRequired = false,
   });
 
@@ -19,6 +21,7 @@ class SurveyQuestionModel {
     'id': id,
     'text': text,
     'type': type,
+    'answer': answer,
     'isRequired': isRequired,
     'options': List<dynamic>.from(options.map((String option) => option)),
   };
@@ -28,6 +31,7 @@ class SurveyQuestionModel {
         id: json['id'],
         text: json['text'],
         type: json['type'],
+        answer: json['answer'],
         options:
             json['options'] != null
                 ? List<String>.from(json['options'])

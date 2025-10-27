@@ -21,7 +21,12 @@ final class UserUnauthenticated extends LoginState {
   const UserUnauthenticated({required this.message});
 }
 
-final class AuthenticationError extends LoginState {
+final class LoginException extends LoginState {
   final String message;
-  const AuthenticationError({required this.message});
+  const LoginException({required this.message});
+}
+
+final class SurveyObtainedSuccess extends LoginState {
+  final SurveyModel survey;
+  const SurveyObtainedSuccess({required this.survey});
 }

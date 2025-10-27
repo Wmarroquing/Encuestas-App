@@ -45,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               OutlinedButton.icon(
                 icon: Icon(Icons.add),
-                label: Text(currentTab == 0 ? 'Crear' : 'Completar'),
+                label: Text(currentTab == 0 ? 'Crear' : 'Ingresar'),
                 onPressed: currentTab == 0 ? fnOnCreateTap : fnOnCompleteTap,
               ),
             ],

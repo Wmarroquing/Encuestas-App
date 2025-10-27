@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:devel_app/common/model/survey_model.dart';
-import 'package:devel_app/survey/service/survey_service.dart';
+import 'package:devel_app/surveyAdmin/service/firebase_database_service.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'survey_event.dart';
 part 'survey_state.dart';
@@ -13,7 +13,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     on<SurveyUpdatedRequested>(_onUpdateSurvey);
   }
 
-  final SurveyService _surveyService = SurveyService();
+  final FirebaseDatabaseService _surveyService = FirebaseDatabaseService();
 
   Future<void> _onCreateSurvey(
     SurveyCreationRequested event,
@@ -22,7 +22,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     emit(SurveyInProgress());
     try {
       await _surveyService.createSurvey(survey: event.surveyModel);
-      emit(SurveyCreationSuccess());
+      emit(SurveyCreationSuccess(accessCode: event.surveyModel.code));
     } on FirebaseException catch (exception) {
       emit(SurveyCreationError(message: exception.message ?? 'Error'));
     } catch (_) {
